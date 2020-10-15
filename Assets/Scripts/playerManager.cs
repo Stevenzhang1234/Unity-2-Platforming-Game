@@ -13,7 +13,7 @@ public class playerManager : MonoBehaviour
     // Player specific variables
   //  private int health;
    // private int score;
-
+    playerinform info;
     // Boolean values
     private bool isGamePaused = false;
 
@@ -27,7 +27,7 @@ public class playerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        info = GameObject.Findithtag("Info").GetCompoent<PlayerInfo>();
+        info = GameObject.FindWithTag("Info").GetComponent<playerinform>();
         // Makes sure game is "unpaused"
         isGamePaused = false;
         Time.timeScale = 1.0f;
@@ -54,7 +54,7 @@ public class playerManager : MonoBehaviour
             LoseGame();
         }
 
-        if(inventory.Count == 0)
+        if(info.inventory.Count == 0)
         {
             inventoryText.text = "Current selection: None";
             descriptionText.text = "";
@@ -72,7 +72,7 @@ public class playerManager : MonoBehaviour
             {
                 info.inventory[currentIndex].Use();
                 info.inventory.RemoveAt(currentIndex);
-                currentIndex = (currentIndex - 1) % info.inventory.Count;
+                currentIndex = (currentIndex + 1) % info.inventory.Count;
             }
         }
         if(Input.GetKeyDown(KeyCode.I))
